@@ -4,36 +4,63 @@ Im Kontext des Seminars wird in diesem Projekt die praktische Analyse einer Linu
 
 Ziel ist es, ein fundiertes Verständnis für die Struktur von ELF-Binaries zu erlangen, den Umgang mit RE-Tools wie Ghidra und GDB zu lernen und mit `pwntools` einen einfachen Exploit für die gefundene Schwachstelle selbst zu entwickeln.
 
----
 
-## Inhalte
-1. [Grundlagen](docs/01_grundlagen.md)  
-2. [Reverse-Engineering - Übersicht](docs/02_re_overview.md)  
-3. [Statische Analyse mit Ghidra](docs/03_statische_analyse.md)
-4. [Dynamische Analyse & Exploit-Development](docs/04_dynamische_analyse.md)
-3. [Schutzmechanismen & Bypasses](docs/05_schutzmechanismen.md)  
-5. [Weiterführende Quellen](docs/06_lernressourcen.md)  
+## Projektstruktur
+```bash
+RE-RCE-LAB/
+│
+├── docs/                        
+│   ├── images/                 
+│   ├── videos/                  
+│   ├── 01_grundlagen.md        
+│   ├── 02_re_overview.md        
+│   ├── 03_statische_analyse.md  
+│   ├── 04_dynamische_analyse.md
+│   ├── 05_schutzmechanismen.md  
+│   ├── 06_lernressourcen.md     
+│   └── Seminar_Slides.pdf      
+│
+├── examples/                   
+│   ├── hex_game/                
+│   └── vuln_server/           
+│       ├── binaries/           
+│       ├── exploits/           
+│       ├── Makefile            
+│       └── vuln_server.c      
+│
+├── .gitignore                 
+├── README.md                    
+└── requirements.txt             
+```
 
----
 
-## Einordnung
 
-**Grundlagen**  
+[`/docs`](./docs/) enthält die komplette Dokumentation der Reverse-Engineering-Analyse, unterteilt in mehrere Abschnitte. Neben der theoretischen Erklärung der ELF-Binary-Struktur, Ghidra-Nutzung, Schutzmechanismen finden sich auch [Videos](./docs/videos/) und Screenshots der Code-Ausführung, sowie die [`Vortragsfolien`](./docs/Seminar_Slides.pdf).
+
+[`/examples`](./examples/) stellt zwei Beispielprojekte bereit:
+- `hex_game` ist ein separates, größeres C-Projekt, das als Ghidra-Übung dient (nicht im Seminar behandelt).
+- `vuln_server` ist das zentrale Beispiel mit einem simplen C-Server, der einen Buffer Overflow enthält. Hier finden sich kompilierte Binaries mit/ohne Schutz, zugehörige Exploits, der Quellcode und ein Makefile.
+
+
+## Einordnung der Doku
+
+### [`01_grundlagen.md`](docs/01_grundlagen.md)  
 Die Grundlagen sind notwendig, um mit ELF-Binaries, den zugrundeliegenden Strukturen und Tools wie Ghidra oder GDB korrekt umzugehen und zu verstehen worauf bei einer Analyse geachtet werden sollte.
 
-**Reverse-Engineering - Übersicht**  
-Die Übersicht zeigt die Informationsquellen auf, die genutzt werden können, um Binaries zu analysieren: Von allgemeinen Informationen mit Standard-Linux Tools bis zur statischen Analyse mit Ghidra, dynamischen Analyse mit GDB und Libraries wie `pwntools` zum Exploit-Development.
+### [`02_re_overview.md`](docs/02_re_overview.md) 
+Übersicht über mögliche Informationsquellen zur Binary-Analyse: ELF-Header, Input-Fuzzing, statische und dynamische Analyse. Einführung in Tools wie file, checksec, readelf, objdump, Ghidra und GDB. Ziel ist es, ein Gefühl dafür zu bekommen, wie man sich einer unbekannten Binary systematisch nähert.
 
-**Statische Analyse mit Ghidra**:
-Die Statische Analyse wird zuerst allgemein innerhalb der **Analyseübersicht** erklärt und hier spezifisch auf die Beispiel-Binary ohne aktivierten Schutzmechanismen `/examples/vuln_server/binaries/vuln_noprot` angewandt, mithilfe von Ghidra. 
-Dazu wurden auch entsprechende Hilfsvideos erstellt, die die Analyse mit Ghidra zeigen unter: [`/docs/video/`](docs/videos).
+### [`03_statische_analyse.md`](docs/03_statische_analyse.md) 
+Praktische statische Analyse des Beispiels `/examples/vuln_server/binaries/vuln_noprot` mit Ghidra. Es wird gezeigt, wie man Funktionen erkennt, C-Pseudocode interpretiert, relevante Strings und Aufrufe identifiziert und erste Hinweise auf Schwachstellen sammelt. ohne das Programm auszuführen. Dazu wurden auch entsprechende Hilfsvideos erstellt, die die Analyse mit Ghidra zeigen unter: [`/docs/video/`](docs/videos).
 
+### [`04_dynamische_analyse.md`](docs/04_dynamische_analyse.md)  
+Hier wird die Beispiel-Binary `/examples/vuln_server/binaries/vuln_noprot` zur Laufzeit analysiert. Mit GDB wird untersucht, wie der Buffer Overflow zustande kommt. Schrittweise wird ein funktionierender Exploit entwickelt: erst Kontrolle über EIP, dann Shellcode-Injektion und schließlich das gezielte Ausführen eigenen Codes mit pwntools.
 
-**Dynamische Analyse & Exploit-Development**  
-Die Binary `/examples/vuln_server/binaries/vuln_noprot` wird danach dynamisch analysiert mit GDB und schrittweise ein Exploit mithilfe der Library `pwntools` entwickelt. 
+### [`05_schutzmechanismen.md`](docs/05_schutzmechanismen.md) 
+Da das Beispiel-Binary bewusst ohne Schutzmechanismen kompiliert wurde, liegt der Fokus zunächst auf den Grundlagen der Analyse und Exploit-Entwicklung. In diesem Abschnitt werden anschließend gängige Sicherheitsmechanismen moderner Linux-Systeme wie ASLR, NX, PIE, Stack Canaries und RELRO erklärt,inklusive ihrer Funktionsweise, Erkennungsmerkmale (z. B. mit checksec) und möglicher theoretischer Umgehungsstrategien.
 
-**Schutzmechanismen**  
-Da das verwendete Beispiel-Binary ohne Schutzmechanismen kompiliert wurde, um den Fokus auf Analyse und Exploit-Grundlagen zu legen, werden in [`/docs/05_schutzmechanismen.md`](docs/03_schutzmechanismen.md) separat moderne Schutzmaßnahmen wie ASLR, PIE, NX, Stack Canaries und RELRO behandelt, inklusive ihrer theoretischen Umgehung.
+### [`06_lernressourcen.md`](docs/06_lernressourcen.md) 
+Verzeichnis hilfreicher Ressourcen: Tutorials, CTF-Plattformen, Reverse Engineering Challenges, Tool-Dokumentationen und weiterführende Videos. Für alle, die sich über das Projekt hinaus vertiefen möchten.
 
 
 ## Lab Setup 
