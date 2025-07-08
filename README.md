@@ -1,8 +1,8 @@
 # Reverse Engineering von Binaries mit RCE-Schwachstelle 
 
-Im Kontext des Seminars wird in diesem Projekt die praktische Analyse einer Linux-Binary mit RCE-Schwachstelle dokumentiert. Es führt durch die typischen Schritte des Reverse Engineering: von statischer und dynamischer Analyse über Exploit-Entwicklung bis hin zur Betrachtung moderner Schutzmechanismen und deren theoretischer Umgehung.
+Im Rahmen des Seminars SoSe2025 dokumentiert dieses Projekt die praktische Analyse einer Linux-Binary mit einer Remote-Code-Execution-(RCE)-Schwachstelle. Dabei werden typische Schritte des Reverse Engineerings durchlaufen – von der statischen und dynamischen Analyse über die Entwicklung eines Exploits bis hin zur Betrachtung moderner Schutzmechanismen und deren möglichen Umgehungsstrategien.
 
-Ziel ist es, ein fundiertes Verständnis für die Struktur von ELF-Binaries zu erlangen, den Umgang mit RE-Tools wie Ghidra und GDB zu lernen und mit `pwntools` einen einfachen Exploit für die gefundene Schwachstelle selbst zu entwickeln.
+Ziel des Projekts ist es, ein Verständnis für den Aufbau von ELF-Binaries zu entwickeln, den praktischen Umgang mit gängigen Reverse Engineering Tools wie Ghidra, GDB und pwntools zu erlernen und eigenständig einen einfachen Exploit für die entdeckte Schwachstelle zu erstellen.
 
 
 ## Projektstruktur
@@ -32,51 +32,64 @@ RE-RCE-LAB/
 ├── README.md                    
 └── requirements.txt             
 ```
+---
+
+[`/docs`](./docs/) enthält die vollständige Dokumentation dieses Projekts und ist thematisch gegliedert in:
+
+- **Theoretische Grundlagen** – der Aufbau von ELF-Binaries, die Funktionsweise von Schutzmechanismen und ein Überblick über gängige Reverse-Engineering-Techniken.
+
+- **Praktische Analyse** – die konkrete Untersuchung der bereitgestellten Binary mittels Tools wie Ghidra (statische Analyse) und GDB (dynamische Analyse), ergänzt durch Screenshots, Ausgaben und begleitende Erklärungen.
+
+- **Zusätzlich enthält der Ordner**: [Videos](./docs/videos/) zur Demonstration der statischen Analyse mit Ghidra, Screenshots der dynamischen Analyse, sowie die [`Vortragsfolien`](./docs/Seminar_Slides.pdf), die im Rahmen des Seminars verwendet wurden.
 
 
+[`/examples`](./examples/) enthält zwei C-basierte Beispielprojekte:
+- **`hex_game`**: Ein größeres, selbst entwickeltes C-Projekt, das sich an dem interaktiven Lernspiel
+[Flippy Bit and the Attack of the Hexadecimals from Base16](https://flippybitandtheattackofthehexadecimalsfrombase16.com/) orientiert.
+Es wurde nicht im Rahmen des Seminars behandelt, ist aber als weiterführende Ghidra-Übung für komplexere statische Analysen vorgesehen, um tiefere Einblicke in die Ghidra-Nutzung bei größeren Codebasen zu gewinnen.
 
-[`/docs`](./docs/) enthält die komplette Dokumentation der Reverse-Engineering-Analyse, unterteilt in mehrere Abschnitte. Neben der theoretischen Erklärung der ELF-Binary-Struktur, Ghidra-Nutzung, Schutzmechanismen finden sich auch [Videos](./docs/videos/) und Screenshots der Code-Ausführung, sowie die [`Vortragsfolien`](./docs/Seminar_Slides.pdf).
+- **`vuln_server`**: Das zentrale Projektbeispiel des Seminars: ein einfacher C-basierter Server mit einer gezielt eingebauten Buffer-Overflow-Schwachstelle.
+Der Ordner enthält: vorkompilierte Binaries (mit und ohne Schutzmechanismen) mithilfe des Makefile, Exploit-Skripte (mit pwntools), den vollständigen Quellcode (vuln_server.c).
 
-[`/examples`](./examples/) stellt zwei Beispielprojekte bereit:
-- `hex_game` ist ein separates, größeres C-Projekt, das als Ghidra-Übung dient (nicht im Seminar behandelt).
-- `vuln_server` ist das zentrale Beispiel mit einem simplen C-Server, der einen Buffer Overflow enthält. Hier finden sich kompilierte Binaries mit/ohne Schutz, zugehörige Exploits, der Quellcode und ein Makefile.
-
+---
+---
 
 ## Einordnung der Doku
-
 ### [`01_grundlagen.md`](docs/01_grundlagen.md)  
-Die Grundlagen sind notwendig, um mit ELF-Binaries, den zugrundeliegenden Strukturen und Tools wie Ghidra oder GDB korrekt umzugehen und zu verstehen worauf bei einer Analyse geachtet werden sollte.
+Einführung in den Aufbau von ELF-Binaries, zentrale Konzepte des Reverse Engineerings. Diese Grundlagen sind wichtig, um die späteren Analyseschritte mit Ghidra und GDB zu verstehen und einzuordnen.
 
 ### [`02_re_overview.md`](docs/02_re_overview.md) 
-Übersicht über mögliche Informationsquellen zur Binary-Analyse: ELF-Header, Input-Fuzzing, statische und dynamische Analyse. Einführung in Tools wie file, checksec, readelf, objdump, Ghidra und GDB. Ziel ist es, ein Gefühl dafür zu bekommen, wie man sich einer unbekannten Binary systematisch nähert.
+Übersicht über mögliche Informationsquellen zur Binary-Analyse: ELF-Header, Input-Fuzzing, statische und dynamische Analyse. Einführung in Tools wie `file`, `checksec`, `readelf`, Ghidra und GDB. Ziel ist es, ein Gefühl dafür zu bekommen, wie man sich einer unbekannten Binary systematisch nähert.
 
 ### [`03_statische_analyse.md`](docs/03_statische_analyse.md) 
-Praktische statische Analyse des Beispiels `/examples/vuln_server/binaries/vuln_noprot` mit Ghidra. Es wird gezeigt, wie man Funktionen erkennt, C-Pseudocode interpretiert, relevante Strings und Aufrufe identifiziert und erste Hinweise auf Schwachstellen sammelt. ohne das Programm auszuführen. Dazu wurden auch entsprechende Hilfsvideos erstellt, die die Analyse mit Ghidra zeigen unter: [`/docs/video/`](docs/videos).
+Statische Analyse der Binary `/examples/vuln_server/binaries/vuln_noprot` mit Ghidra. Es wird gezeigt, wie Funktionen rekonstruiert, C-Pseudocode interpretiert, relevante Strings identifiziert und potenzielle Schwachstellen erkannt werden, ohne die Binary auszuführen. Ergänzend stehen Hilfsvideos unter [`/docs/video/`](docs/videos) zur Verfügung, die die Analyse visuell begleiten.
 
-### [`04_dynamische_analyse.md`](docs/04_dynamische_analyse.md)  
-Hier wird die Beispiel-Binary `/examples/vuln_server/binaries/vuln_noprot` zur Laufzeit analysiert. Mit GDB wird untersucht, wie der Buffer Overflow zustande kommt. Schrittweise wird ein funktionierender Exploit entwickelt: erst Kontrolle über EIP, dann Shellcode-Injektion und schließlich das gezielte Ausführen eigenen Codes mit pwntools.
+
+### [`04_dynamische_analyse.md`](docs/04_dynamische_analyse.md) 
+Dynamische Analyse desselben Beispiels mit GDB. Schrittweise wird ein Exploit entwickelt mithilfe von `pwntools`: erst Kontrolle über den Instruction Pointer (EIP), dann Shellcode-Injektion und schließlich das gezielte Ausführen eigenen Codes mit pwntools.
 
 ### [`05_schutzmechanismen.md`](docs/05_schutzmechanismen.md) 
-Da das Beispiel-Binary bewusst ohne Schutzmechanismen kompiliert wurde, liegt der Fokus zunächst auf den Grundlagen der Analyse und Exploit-Entwicklung. In diesem Abschnitt werden anschließend gängige Sicherheitsmechanismen moderner Linux-Systeme wie ASLR, NX, PIE, Stack Canaries und RELRO erklärt,inklusive ihrer Funktionsweise, Erkennungsmerkmale (z. B. mit checksec) und möglicher theoretischer Umgehungsstrategien.
+Im praktischen Beispiel waren die Schutzmechanismen deaktiviert, um die Grundlagen der Exploit-Entwicklung verständlich zu vermitteln. Deshalb folgt in diesem Abschnitt eine Erklärung typischer Sicherheitsmechanismen moderner Linux-Systeme: ASLR, NX, PIE, Stack Canaries und RELRO. Beschrieben werden Funktionsweise, Erkennungsmerkmale (via checksec) und theoretische Ansätze zu ihrer Umgehung. 
 
 ### [`06_lernressourcen.md`](docs/06_lernressourcen.md) 
-Verzeichnis hilfreicher Ressourcen: Tutorials, CTF-Plattformen, Reverse Engineering Challenges, Tool-Dokumentationen und weiterführende Videos. Für alle, die sich über das Projekt hinaus vertiefen möchten.
+Zusammenstellung hilfreicher Materialien: Tutorials, CTF-Plattformen, Challenges, Tool-Dokumentationen und ergänzende Videoquellen, zur Vertiefung über das Projekt hinaus.
 
+---
+---
 
 ## Lab Setup 
-
-Für die praktische Durchführung der Analyse wurde ein lokales Testlabor mit zwei virtuellen Maschinen eingerichtet.
+Für die praktische Analyse wurde ein lokales Testlabor mit zwei virtuellen Maschinen eingerichtet: einer **Ziel-VM (Opfer)** und einer **Angreifer-VM**.
 
 ### Metasploitable VM
-Die **Opfer-VM** basiert auf  [Metasploitable 2](https://sourceforge.net/projects/metasploitable/), einer absichtlich verwundbaren Linux-Distribution, die typischerweise zu Test- und Schulungszwecken eingesetzt wird. Sie stellt den Server bzw. die Ziel-Binary bereit. 
+Die Opfer-VM basiert auf [Metasploitable 2](https://sourceforge.net/projects/metasploitable/), einer absichtlich verwundbaren Linux-Distribution für Schulungs- und Testzwecke. Sie stellt den verwundbaren Server bzw. die zu analysierende Binary bereit.
+
 
 ### Kali-VM
-Als **Angreifer-VM** kommt eine [Kali Linux](https://www.kali.org/get-kali/) VM zum Einsatz. Diese Linux-Distribution ist auf Penetration-Testing spezialisiert und kommt mit zahlreichen vorinstallierten Tools. Auf der Kali-VM wurden folgende zusätzliche Tools installiert bzw. verwendet:
-- [Ghidra](https://ghidra-sre.org/) – Reverse-Engineering-Tool von der NSA  
-- [Visual Studio Code](https://code.visualstudio.com/) – Code Editor für Exploit-Entwicklung  
-- [pwntools](https://docs.pwntools.com/en/stable/) – Python-Library für Exploit-Skripting  
+Als Angreifer-VM dient eine [Kali Linux](https://www.kali.org/get-kali/) Installation – eine auf Penetration Testing spezialisierte Distribution mit vorinstallierten RE- und Exploit-Tools. Zusätzlich wurden folgende Tools verwendet bzw. manuell installiert:
+- [Ghidra](https://ghidra-sre.org/) – Reverse-Engineering-Framework, entwickelt von der NSA  
 - [GDB](https://sourceware.org/gdb/) – GNU Debugger  
+- [pwntools](https://docs.pwntools.com/en/stable/) – Python-Library für Exploit-Skripting  
 - [pwndbg](https://github.com/pwndbg/pwndbg) – GDB-Plugin für bessere Binary-Debugging-Ansicht  
+- [Visual Studio Code](https://code.visualstudio.com/) – Code Editor für Exploit-Entwicklung  
 
-
-Die Ziel-Binaries wurden direkt auf der Metasploitable-VM kompiliert, um sicherzustellen, dass Architektur, Kompilierung und etwaige Schutzmechanismen dem echten Zielsystem entsprechen. Anschließend wurden sie per `scp` auf die Kali-VM übertragen, wo die statische und dynamische Analyse sowie die Exploit-Entwicklung durchgeführt wurden.
+Die Ziel-Binaries wurden direkt auf der Metasploitable-VM kompiliert, um sicherzustellen, dass Architektur, Kompilerumgebung und Schutzmechanismen exakt dem Zielsystem entsprechen. Anschließend wurden sie per `scp` auf die Kali-VM übertragen, in der dann die statische und dynamische Analyse, sowie die Exploit-Entwicklung durchgeführt wurden.

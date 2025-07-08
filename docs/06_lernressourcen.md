@@ -27,14 +27,27 @@
 - **[Reverse Engineering Stack Exchange](https://reverseengineering.stackexchange.com/)**  
   Q&A-Plattform zu Disassembly, Decompilation, Debugging und Binary-Analyse.
 
+- **[BIackMage/ReverseEngineeringPractice](https://github.com/BIackMage/ReverseEngineeringPractice)**: Sammlung von praktischen RE-Übungen gegliedert nach Kategorien wie Crackmes, Serial-Checks, Anti-Debugging und Patch-Analysen.
+
+
+- **[kovidomi/game-reversing](https://github.com/kovidomi/game-reversing)**: Sammlung von Tools, Notizen und Reverse-Engineering-Techniken speziell für die Analyse von Spielen. Fokus auf dynamisches Debugging, Speicheranalyse, Trainer-Entwicklung und Cheat-Engines.
+
+- **[HACKE-RC/awesome-reversing](https://github.com/HACKE-RC/awesome-reversing)**: Kuratierte Linkliste (Awesome-Liste) mit hunderten Ressourcen, Tools, Blogs und Papers zu Reverse Engineering.
+
+- **[wtsxDev/reverse-engineering](https://github.com/wtsxDev/reverse-engineering)**: Weitere Notizsammlung mit Tutorials und Codebeispielen zu Themen wie Ghidra, IDA, Shellcode, Obfuskation, Crackmes, Windows PE-Analyse und Linux ELF.
+
 
 ## Fachbücher
-- **Erickson**, J. – Hacking: The Art of Exploitation (2nd Ed.)
-→ Einführung in Exploiting und RE. Behandelt Speicher, Buffer Overflows, ASM, GDB. Inkl. Linux-Demo-Umgebung.
+- **Hacking: The Art of Exploitation (2nd Edition)**, Autor: Jon Erickson
+Verlag: No Starch Press, ISBN: 9781593271442
 
-- **Nunn, D**. – Practical Reverse Engineering
-→ Fokussiert auf x86/x64, ARM und Windows. Beinhaltet praktische Disassembly-, Debugging- und Exploit-Techniken.
+- **Ghidra Software Reverse-Engineering for Beginners (2nd Edition)**, Autoren: David Álvarez Pérez, Ravikant Tiwari, Verlag: Packt Publishing, Januar 2025, ISBN: 9781835889824, [Github](https://github.com/PacktPublishing/Ghidra-Software-Reverse-Engineering-for-Beginners)
 
-- **Sikorski, M., Honig, A.** – Practical Malware Analysis
-→ Malware-fokussiert, aber gut für RE-Einsteiger mit Statische/Dynamische Analyse, Windows-PE-Analyse, Sandbox-Verhalten.
+
+## Youtube
+- **The Morpheus Tutorials** Videoreihe: [Reverse Engineering with Ghidra](https://www.youtube.com/watch?v=gdpHhWiiayM&list=PLNmsVeXQZj7oQc3MxjWB-rYHHo9vX905a)
+
+- **Low Level** Videoreihe: [Reverse Engineering Adventures](https://www.youtube.com/playlist?list=PLc7W4b0WHTAUonBygdM0Lh5iO2tgX64ew)
+
+
 

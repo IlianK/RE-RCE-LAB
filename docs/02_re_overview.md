@@ -12,7 +12,7 @@ Zur Analyse einer Binärdatei mit dem Ziel, Schwachstellen zu identifizieren, st
 ## 1. Binary beschaffen
 Der erste Schritt jeder Analyse ist die Beschaffung der Binärdatei. Woher eine Binary stammt, hängt dabei stark vom Kontext ab. In der Malware-Analyse etwa liegen oft bereits verdächtige Dateien vor, etwa aus infizierten Systemen, E-Mail-Anhängen oder durch Dateiextraktion aus kompromittierten Anwendungen. 
 
-In einem offensiven Sicherheitskontext hingegen – etwa bei einem Penetrationstest oder CTF-Szenario – werden Binaries häufig im Rahmen der Reconnaissance-Phase gefunden: auf öffentlich zugänglichen Servern, über Leaks oder durch direkten Zugriff auf herunterladbare Executables.
+In einem offensiven Sicherheitskontext hingegen, wie bei einem Penetrationstest oder CTF-Szenario werden Binaries häufig im Rahmen der Reconnaissance-Phase gefunden: auf öffentlich zugänglichen Servern, über Leaks oder durch direkten Zugriff auf herunterladbare Executables.
 
 
 ---
@@ -117,7 +117,6 @@ Wurde eine Schwachstelle gefunden, folgt die **Entwicklung eines Exploits**. Zie
 - Einsatz von Tools wie **pwntools** zur automatisierten Ausführung
 
 Dabei ist stets zu berücksichtigen, welche Schutzmechanismen aktiv sind und wie sie ggf. umgangen werden können. 
-
 Die Schutzmechanismen werden [hier ausgeführt](../docs/05_schutzmechanismen.md).
 
 

@@ -251,3 +251,7 @@ Damit ist gezeigt, dass wir die Kontrolle über den Programmfluss haben und **ei
 
 In einem echten Angriffsszenario könnte dieser Shellcode nun durch eine Payload ersetzt werden, die  eine **Reverse Shell** erstellt. Die Library [`pwntools`](https://docs.pwntools.com/en/stable/) bietet dafür passende Funktionen zur Shellcode-Generierung, wie `shellcraft.sh()`.
 
+---
+---
+
+[Nächstes Kapitel: Schutzmechanismen](/docs/05_schutzmechanismen.md)

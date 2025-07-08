@@ -38,7 +38,7 @@ Wie das ganze aussehen würde in einer stripped Binary ist in dem [Stripped Vide
 ### 6. **Decompile-View nutzen**  
 Der Decompiler (im Video rechts) ist das mächtigste Feature Ghidra's, da es den rekonstruierten lesbaren C-Pseudocode zeigt.
 Ghidra unterstützt viele Architekturen (Assemblersprachen) und ist in der Lage diese architektur-spezifischen Maschinenbefehle in der Binary durch entsprechende Disassemblern in  **Assembler-Listing** umzuwandeln. 
-Ghidra nutzt als Zwischensprache den internen P-Code, der erst diese architektur-spezifischen Assembler-Listings in P-Code Instruktionen umwandelt und dann daraus einen lesbaren, **C-ähnlichen Pseudocode** generiert. Dadurch können Funktionen identifiziert, Kontrollflüsse rekonstruiert und sogar die Logik des Programms verstanden werden, ohne Zugriff auf den Originalquellcode.
+Ghidra nutzt als Zwischensprache den internen **P-Code**, der erst diese architektur-spezifischen Assembler-Listings in P-Code Instruktionen umwandelt und dann daraus einen lesbaren, **C-ähnlichen Pseudocode** generiert. Dadurch können Funktionen identifiziert, Kontrollflüsse rekonstruiert und sogar die Logik des Programms verstanden werden, ohne Zugriff auf den Originalquellcode.
 
 
 ---
@@ -71,3 +71,8 @@ Die Rückgabe von `get_password_input` und `generate_password` wird verglichen.
 Da aus dem Input-Test bekannt ist, dass die Passwort-Eingabe ein seltsames Verhalten gezeigt hat, ist es sinnvoll die Funktion zu finden, die das Passwort handelt: `get_password_input`. 
 Auch hier existiert ein lokaler Buffer von 68 Bytes (`local_4c`), jedoch liest das Programm mit `read(fd, pw_input, 0x80)` ganze 128 Bytes ein (Die Umwandlung von Hex zu Dezimal, wird durch Hovern angezeigt).
 Hier liegt ein klarer **Buffer Overflow** vor: Der Stack-Buffer wird überlaufen, was bei zu langen Eingaben zur **Überschreibung der Rücksprungadresse** führt und genau diesen Effekt hatten wir im Eingabetest bereits beobachtet, als das Programm beim Passwort-Crash abstürzte.
+
+---
+---
+
+Als nächstes geht es zur: [Dynamischen Analyse](/docs/04_dynamische_analyse.md)
